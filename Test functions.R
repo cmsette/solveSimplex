@@ -1,10 +1,10 @@
 ### Solves for equilibrium for 2-5 player systems
 # eq2-5: Take W in matrix format, calculate delta matrix, finds zero eigenvector, scales eigenvector to unity (equilibrium solution)
 # eqVal: validates solution for eq3-5, 
-eqVal <- function(soln){ 
+eqVal <- function(deltas, soln){ 
   n = length(soln)
-  test1 <- eigen(eqn)$value[n]  # saves corresponding eigenvalue, should = 0
-  test2 <- abs(eqn %*% soln)		# multiplies delta matrix by solution, should = 0
+  test1 <- eigen(deltas)$value[n]  # saves corresponding eigenvalue, should = 0
+  test2 <- abs(deltas %*% soln)		# multiplies delta matrix by solution, should = 0
   if(abs(Re(test1)) > zero | any(abs(test2) > zero)){return(c(rep(NA,n),NA))} # fails validation, returns NA's
   else if(all(as.matrix(Re(soln)) >= 0)){return(c(Re(soln),1))}               # valid output, returns eq
   else if(any(Re(soln) == Inf)){return(c(Re(soln),0))}                        # no internal eq, returns NA's
@@ -26,17 +26,17 @@ eq2 <- function(W){
 eq3<-function(W, zero){ 
   deltas <- rbind(W[1,]-W[2,], W[2,]-W[3,], W[3,]-W[1,])				#creates delta matrix
   soln <- eigen(deltas)$vector; soln <- soln[,3]/sum(soln[,3])  #calculates & scales eigenvector for null set, eq
-  return(eqVal(soln))
+  return(eqVal(deltas, soln))
 }
 # 4 strategies
 eq4<-function(W, zero){ 
   deltas <- rbind(W[1,]-W[2,], W[2,]-W[3,], W[3,]-W[4,], W[4,]-W[1,]) #creates delta matrix
-  soln <- eigen(eqn)$vector; soln <- soln[,4]/sum(soln[,4])			      #calculates & scales eigenvector for null set,
-  return(eqVal(soln))
+  soln <- eigen(deltas)$vector; soln <- soln[,4]/sum(soln[,4])			      #calculates & scales eigenvector for null set,
+  return(eqVal(deltas, soln))
 }
 # 5 strategies
-test5<-function(W, zero){ 
+eq5<-function(W, zero){ 
   deltas <- rbind(W[1,]-W[2,], W[2,]-W[3,], W[3,]-W[4,], W[4,]-W[5,], W[5,]-W[1,])  #creates delta matrix
-  soln <- eigen(eqn)$vector; soln <- soln[,5]/sum(soln[,5])						              #calculates & scales eigenvector for null set
-  return(eqVal(soln))
+  soln <- eigen(deltas)$vector; soln <- soln[,5]/sum(soln[,5])						              #calculates & scales eigenvector for null set
+  return(eqVal(deltas, soln))
 }

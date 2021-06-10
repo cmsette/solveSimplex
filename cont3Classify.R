@@ -6,43 +6,38 @@
 # Error1: failed equilibrium calculation validation step in Test functions (may be resolved by increasing value of "zero" var)
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
-cont3Classify<-function(seq, W, zero){
-  if(is.na(seq[4])==T){type<-c("Error1")}
-  else if(seq[4]==0){type<-c("None")}
-  else{W1<-W[1,1]; W2<-W[1,2]; W3<-W[1,3]; W4<-W[2,1]; W5<-W[2,2]; W6<-W[2,3]; W7<-W[3,1]; W8<-W[3,2]; W9<-W[3,3] 
-  r <- seq[1]; p <- seq[2]; s <- seq[3]																		#Defines eq
-  P <- matrix( c( (2/3),(-1/3),(-1/3), (-1/3),(2/3),(-1/3), (-1/3),(-1/3),(2/3) ), ncol=3, byrow=T)			#Identity matrix
-  #Calculates Jacobian matrix expressions for r: ∆r expression derived by r, p, s, respectively
-  Jac1<-as.expression(D(expression(r*((r*W1)+(p*W2)+(s*W3)) - r*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "r"))
-  Jac2<-as.expression(D(expression(r*((r*W1)+(p*W2)+(s*W3)) - r*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "p"))
-  Jac3<-as.expression(D(expression(r*((r*W1)+(p*W2)+(s*W3)) - r*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "s"))
-  #Calculates Jacobian matrix expressions for p: ∆p expression derived by r, p, s, respectively
-  Jac4<-as.expression(D(expression(p*((r*W4)+(p*W5)+(s*W6)) - p*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "r"))
-  Jac5<-as.expression(D(expression(p*((r*W4)+(p*W5)+(s*W6)) - p*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "p"))
-  Jac6<-as.expression(D(expression(p*((r*W4)+(p*W5)+(s*W6)) - p*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "s"))
-  #Calculates Jacobian matrix expressions for s: ∆s expression derived by r, p, s, respectively
-  Jac7<-as.expression(D(expression(s*((r*W7)+(p*W8)+(s*W9)) - s*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "r"))
-  Jac8<-as.expression(D(expression(s*((r*W7)+(p*W8)+(s*W9)) - s*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "p"))
-  Jac9<-as.expression(D(expression(s*((r*W7)+(p*W8)+(s*W9)) - s*( r*((r*W1)+(p*W4)+(s*W7)) + p*((r*W2)+(p*W5)+(s*W8)) + s*((r*W3)+(p*W6)+(s*W9)) ) ), "s"))
-  #Inputs payoff matrix and eq values into expression, saves solutions as Jacobian matrix (Jac)
-  e1 <- environment()
-  Jac<-matrix(nrow=3, ncol=3, byrow=T)
-  Jac[1,1]<-as.numeric(eval(Jac1, env=e1)); Jac[1,2]<-as.numeric(eval(Jac2, env=e1)); Jac[1,3]<-as.numeric(eval(Jac3, env=e1))
-  Jac[2,1]<-as.numeric(eval(Jac4, env=e1)); Jac[2,2]<-as.numeric(eval(Jac5, env=e1)); Jac[2,3]<-as.numeric(eval(Jac6, env=e1))
-  Jac[3,1]<-as.numeric(eval(Jac7, env=e1)); Jac[3,2]<-as.numeric(eval(Jac8, env=e1)); Jac[3,3]<-as.numeric(eval(Jac9, env=e1))
-  #Calculates eigenvectors for projection matrix, returns values
-  M <- Jac %*% P																					#Multiplies Jac & Identity
-  if(isTRUE(any(M=="NaN"))==T){type<-c("NaN")} 
-  else{EigM <- eigen(M, symmetric=F)
-  if(abs(Re(EigM$values[3])) < zero){	
-    EigM$values[1:2] <- sort(Re(EigM$values)[1:2], decreasing=T)
-    if(abs(Re(EigM$values[1])) < zero){type<-c("Inconclusive")}
-    else if(Re(EigM$values[1]) < -zero){type<-c("Sink")}
-    else if(Re(EigM$values[2]) > zero){type<-c("Source")}	
-    else{signs<-ifelse(Re(EigM$values[1:2]) > zero, 1, 0)
-    if(sum(signs) == 1){type<-c("Saddle1")}}}		
-  else{type<-c("Validation error2")}		
-  }
-  }
-  return(type)
+cont3Classify <- function(seq, W, zero){
+  if(is.na(seq[4])==T){type <- c("Error1")}
+  else if(seq[4]==0){type <- c("None")}
+  else{
+    W1<-W[1,1]; W2<-W[1,2]; W3<-W[1,3]; W4<-W[2,1]; W5<-W[2,2]; W6<-W[2,3]; W7<-W[3,1]; W8<-W[3,2]; W9<-W[3,3] 
+    r <- seq[1]; p <- seq[2]; s <- seq[3]
+    P <- matrix( c( (2/3),(-1/3),(-1/3), (-1/3),(2/3),(-1/3), (-1/3),(-1/3),(2/3) ), ncol=3, byrow=T)
+    # Calculates Jacobian matrix expressions for r: ∆r expression derived by r, p, s, respectively
+    Jac1 <- 2*r*W1 + p*W2 + s*W3 - (r*(3*r*W1 + p*W2 + 2*p*W4 + s*W3 + 2*s*W7) + p*(r*W2 + p*W5 + s*W8) + s*(r*W3 + p*W6 + s*W9))
+    Jac2 <- r*W2 - r*(r*W2 + r*W4 + 2*p*W5 + s*W6 + s*W8)
+    Jac3 <- r*W3 - r*(r*W3 + r*W7 + p*W6 + p*W8 + 2*s*W9)
+    # Calculates Jacobian matrix expressions for p: ∆p expression derived by r, p, s, respectively
+    Jac4 <- p*W4 - p*(2*r*W1 + p*W2 + p*W4 + s*W3 + s*W7)
+    Jac5 <- r*W4 + 2*p*W5 + s*W6 - (r*(r*W1 + p*W4 + s*W7) + p*(2*r*W2 + r*W4 + 3*p*W5 + s*W6 + 2*s*W8) + s*(r*W3 + p*W6 + s*W9))
+    Jac6 <- p*W6 - p*(r*W3 + r*W7 + p*W6 + p*W8 + 2*s*W9)
+    # Calculates Jacobian matrix expressions for s: ∆s expression derived by r, p, s, respectively
+    Jac7 <- s*W7 - s*(2*r*W1 + p*W2 + p*W4 + s*W3 + s*W7)
+    Jac8 <- s*W8 - s*(r*W2 + r*W4 + 2*p*W5 + s*W6 + s*W8)
+    Jac9 <- r*W7 + p*W8 + 2*s*W9 - (r*(r*W1 + p*W4 + s*W7) + p*(r*W2 + p*W5 + s*W8) + s*(2*r*W3 + r*W7 + 2*p*W6 + p*W8 + 3*s*W9))
+    Jac <- matrix(c(Jac1, Jac2, Jac3, Jac4, Jac5, Jac6, Jac7, Jac8, Jac9), nrow=3, ncol=3, byrow=T)
+    # Calculates eigenvectors for projection matrix, returns values
+    M <- Jac %*% P
+    if(isTRUE(any(M=="NaN"))==T){type<-c("Error2")} 
+    else{EigM <- eigen(M, symmetric=F)
+      if(abs(Re(EigM$values[3])) < zero){	
+      EigM$values[1:2] <- sort(Re(EigM$values)[1:2], decreasing=T)
+      if(abs(Re(EigM$values[1])) < zero){type<-c("Inconclusive")}
+      else if(Re(EigM$values[1]) < -zero){type<-c("Sink")}
+      else if(Re(EigM$values[2]) > zero){type<-c("Source")}	
+      else{signs<-ifelse(Re(EigM$values[1:2]) > zero, 1, 0)
+      if(sum(signs) == 1){type<-c("Saddle1")}}}		
+      else{type<-c("Error3")}	
+    }
+  }; return(type)
 }
