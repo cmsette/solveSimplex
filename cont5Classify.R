@@ -6,7 +6,7 @@
 # Error1: failed equilibrium calculation validation step in Test functions (may be resolved by increasing value of "zero" var)
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
-cont5Classifynew <- function(seq, W, zero){
+cont5Classify <- function(seq, W, zero){
   if(is.na(seq[6])==T){type<-c("Error1")}
   else if(seq[6]==0){type<-c("No eq")}
   else{
@@ -20,7 +20,7 @@ cont5Classifynew <- function(seq, W, zero){
     Jac2 <- r*W2 - r*(r*W2 + r*W6 + 2*p*W7 + s*W8 + s*W12 + l*W9 + l*W17 + k*W10 +k*W22)
     Jac3 <- r*W3 - r*(r*W3 + r*W11 + p*W8 + p*W12 + 2*s*W13 + l*W14 + l*W18 + k*W15 + k*W23)
     Jac4 <- r*W4 - r*(r*W4 + r*W16 + p*W9 + p*W17 + s*W14 + s*W18 + 2*l*W19 + k*W20 + k*W24)
-    Jac5 <- r*W5 - r*r*W5 + (r*W21 + p*W10 + p*W22 + s*W15 + s*W23 + l*W20 + l*W24 + 2*k*W25)
+    Jac5 <- r*W5 - r*(r*W5 + r*W21 + p*W10 + p*W22 + s*W15 + s*W23 + l*W20 + l*W24 + 2*k*W25)
     # Calculates Jacobian matrix expressions for p: ∆p expression derived by r, p, s, l, k respectively
     Jac6 <- p*W6 - p*(2*r*W1 + p*W2 + p*W6 + s*W3 + s*W11 + l*W4 + l*W16 + k*W5 + k*W21)
     Jac7 <- r*W6 + p*W7 + s*W8 + l*W9 + k*W10 + p*W7 - (r*(r*W1 + p*W6 + s*W11 + l*W16 + k*W21) + p*(2*r*W2 + r*W6 + 3*p*W7 + s*W8 + 2*s*W12 + l*W9 + 2*l*W17 + k*W10 + 2*k*W22) + s*(r*W3 + p*W8 + s*W13 + l*W18 + k*W23) + l*(r*W4 + p*W9 + s*W14 + l*W19 + k*W24) + k*(r*W5 + p*W10 + s*W15 + l*W20 + k*W25))
@@ -45,9 +45,9 @@ cont5Classifynew <- function(seq, W, zero){
     Jac23 <- k*W23 - k*(r*W3 + r*W11 + p*W8 + p*W12 + 2*s*W13 + k*W15 + l*W14 + l*W18 + k*W23)
     Jac24 <- k*W24 - k*(r*W4 + r*W16 + p*W17 + p*W9 + s*W14 + s*W18 + 2*l*W19 + k*W20 + k*W24)
     Jac25 <- r*W21 + p*W22 + s*W23 + l*W24 + 2*k*W25 - (r*(r*W1 + p*W6 + s*W11 + l*W16 + k*W21) + p*(r*W2 + p*W7 + s*W12 + l*W17 + k*W22) + s*(r*W3 + p*W8 + s*W13 + l*W18 + k*W23) + l*(r*W4 + p*W9 + s*W14 + l*W19 + k*W24) + k*(2*r*W5 + r*W21 + 2*p*W10 + p*W22 + 2*s*W15 + s*W23 + 2*l*W20 + l*W24 + 3*k*W25))
-    Jac <- matrix(c(Jac1, Jac2, Jac3, Jac4, Jac5, Jac6, Jac7, Jac8, Jac9, Jac10, Jac11, Jac12, Jac13, Jac14, Jac15, Jac16, Jac17, Jac18, Jac19, Jac20, Jac21, Jac22, Jac23, Jac24, Jac25), nrow=5, ncol=4, byrow=T)
+    Jac <- matrix(c(Jac1, Jac2, Jac3, Jac4, Jac5, Jac6, Jac7, Jac8, Jac9, Jac10, Jac11, Jac12, Jac13, Jac14, Jac15, Jac16, Jac17, Jac18, Jac19, Jac20, Jac21, Jac22, Jac23, Jac24, Jac25), nrow=5, ncol=5, byrow=T)
     # Calculates eigenvectors for projection matrix, returns values
-    M <- Jac %*% P; print(Jac)
+    M <- Jac %*% P
     if(isTRUE(any(M=="NaN"))==T){type<-c("Error2")} 
     else{EigM <- eigen(M, symmetric=F)
     if(abs(Re(EigM$values[5])) < zero){	
