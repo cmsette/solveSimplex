@@ -17,6 +17,7 @@ cont2Classify<-function(seq, W, zero){
   #Inputs payoff matrix and eq values into expression, saves solutions as Jacobian matrix (Jac)
   e1 <- environment()
   Jac<-matrix(nrow=2, ncol=2, byrow=T)
+  print(Jac)
   Jac[1,1]<-eval(Jac1, env=e1); Jac[1,2]<-eval(Jac2, env=e1); Jac[2,1]<-eval(Jac3, env=e1); Jac[2,2]<-eval(Jac4, env=e1);
   #Calculates eigenvectors for projection matrix, returns values
   M <- Jac %*% P
