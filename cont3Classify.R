@@ -6,7 +6,7 @@
 # Error1: failed equilibrium calculation validation step in Test functions (may be resolved by increasing value of "zero" var)
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
-cont3Classify <- function(seq, W, zero){
+cont3Classify <- function(seq, W, zero, vars){
   if(is.na(seq[4])==T){type <- c("Error1")}
   else if(seq[4]==0){type <- c("None")}
   else{
@@ -39,5 +39,6 @@ cont3Classify <- function(seq, W, zero){
       if(sum(signs) == 1){type<-c("Saddle1")}}}		
       else{type<-c("Error3")}	
     }
-  }; return(type)
+    colnames(W) <- substr(vars,1,2,3); rownames(W) <- substr(vars,1,2)
+  }; return(list(W = W, Eq = type, Eig = EigM))
 }

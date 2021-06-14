@@ -6,7 +6,7 @@
 # Error1: failed equilibrium calculation validation step in Test functions (may be resolved by increasing value of "zero" var)
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
-cont4Classify <- function(seq, W, zero){
+cont4Classify <- function(seq, W, zero, vars){
   if(is.na(seq[5])==T){type<-c("Error1")}
   else if(seq[5]==0){type<-c("None")}
   else{
@@ -39,14 +39,15 @@ cont4Classify <- function(seq, W, zero){
     M <- Jac %*% P
     if(isTRUE(any(M=="NaN"))==T){type<-c("Error2")} 
     else{EigM <- eigen(M, symmetric=F)
-    if(abs(Re(EigM$values[4])) < zero){	
-      EigM$values[1:3] <- sort(Re(EigM$values)[1:3], decreasing=T)
-      if(abs(Re(EigM$values[1])) < zero){type<-c("Inconclusive")}
-      else if(Re(EigM$values[1]) < -zero){type<-c("Sink")}
-      else if(Re(EigM$values[3]) > zero){type<-c("Source")}	
-      else{signs<-ifelse(Re(EigM$values[1:3]) > zero, 1, 0)
-      if(sum(signs) == 1){type<-c("Saddle1")}; if(sum(signs) == 2){type<-c("Saddle2")}}}		
-    else{type<-c("Error3")}		
+      if(abs(Re(EigM$values[4])) < zero){	
+        EigM$values[1:3] <- sort(Re(EigM$values)[1:3], decreasing=T)
+        if(abs(Re(EigM$values[1])) < zero){type<-c("Inconclusive")}
+        else if(Re(EigM$values[1]) < -zero){type<-c("Sink")}
+        else if(Re(EigM$values[3]) > zero){type<-c("Source")}	
+        else{signs<-ifelse(Re(EigM$values[1:3]) > zero, 1, 0)
+        if(sum(signs) == 1){type<-c("Saddle1")}; if(sum(signs) == 2){type<-c("Saddle2")}}
+      }	else{type<-c("Error3")}		
     }
-  }; return(type)	
+    colnames(W) <- substr(vars,1,3); rownames(W) <- substr(vars,1,3)
+  }; return(list(W = W, Eq = type, Eig = EigM))
 }
