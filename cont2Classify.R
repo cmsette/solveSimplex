@@ -7,7 +7,6 @@
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
 cont2Classify <- function(seq, W, zero, vars){
-  colnames(W) <- vars; rownames(W) <- vars
   if(is.na(seq[3])==T){type <- c("Error1"); EigM = NA}
   else if(seq[3]==0){type <- c("None"); EigM = NA}
   else{

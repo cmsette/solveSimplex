@@ -7,7 +7,6 @@
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
 cont3Classify <- function(seq, W, zero, vars){
-  colnames(W) <- rownames(W) <- vars
   if(any(is.na(seq[1:3]))){type <- c("None")}else 
   if(is.na(seq[4])){type <- c("Error1")}else 
   if(seq[4]==0){type <- c("None")}

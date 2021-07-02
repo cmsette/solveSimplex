@@ -1,6 +1,7 @@
 ### Function to generate solution tables (2--players), called by solveSimplex
 table5 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   svars <- substr(vars,1,2)
+  colnames(Wmatrix) <- rownames(Wmatrix) <- vars
   if(gen_time == "continuous"){}
   else if(gen_time == "discrete"){stop("discrete generation time not yet implemented")}
   else{stop("invalid generation time")}
@@ -121,7 +122,7 @@ table5 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   Eig_2Edges <- c(eq4RPSL[[3]][[3]][1], eq4RPSL[[3]][[3]][2], eq4RPSL[[3]][[3]][3], eq4RSLK[[3]][[3]][3], eq4PSLK[[3]][[3]][1],
                   eq4PSLK[[3]][[3]][2], eq4PSLK[[3]][[3]][3], eq4PSLK[[3]][[3]][4], eq4PSLK[[3]][[3]][5], eq4PSLK[[3]][[3]][6])
   # output table
-  table_out <- list(table_full, Faces = list(table_4faces, table_3faces, RPSLK2_Eq), Eig = list(All = Eig, "Faces(4)" = Eig_4Edges, "Faces(3)" = Eig_3Edges, "Faces(2)" = Eig_2Edges))
+  table_out <- list(table_full, Faces = list(table_4faces, table_3faces, RPSLK2_Eq), Eigendecomposition = list(All = Eig, "Eigendecomposition_Faces(4)" = Eig_4Edges, "Eigendecomposition_Faces(3)" = Eig_3Edges, "Eigendecomposition_Faces(2)" = Eig_2Edges))
   names(table_out) <- c(paste(vars[1],vars[2],vars[3],vars[4],vars[5],sep="."), "Face_Equilibria", "Eigendecomposition"); names(table_out[[2]]) = c("Faces(4)", "Faces(3)", "Faces(2)")
   return(table_out)
 }

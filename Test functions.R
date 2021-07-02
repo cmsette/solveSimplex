@@ -34,13 +34,15 @@ eq3 <- function(W, zero){
 eq4 <- function(W, zero){ 
   deltas <- rbind(W[1,]-W[2,], W[2,]-W[3,], W[3,]-W[4,], W[4,]-W[1,])
   if(all(deltas==0)){return(c(rep(NA,4),NA))}
-  else{soln <- eigen(deltas)$vector; soln <- soln[,4]/sum(soln[,4])
+  else{
+    soln <- eigen(deltas)$vector; soln <- soln[,4]/sum(soln[,4])
     return(eqVal(deltas, soln, zero))}
 }
 # 5 strategies
 eq5 <- function(W, zero){ 
   deltas <- rbind(W[1,]-W[2,], W[2,]-W[3,], W[3,]-W[4,], W[4,]-W[5,], W[5,]-W[1,])
   if(all(deltas==0)){return(c(rep(NA,5),NA))}
-  else{soln <- eigen(deltas)$vector; soln <- soln[,5]/sum(soln[,5])
-  return(eqVal(deltas, soln, zero))}
+  else{
+    soln <- eigen(deltas)$vector; soln <- soln[,5]/sum(soln[,5])
+    return(eqVal(deltas, soln, zero))}
 }

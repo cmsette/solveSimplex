@@ -1,6 +1,7 @@
 ### Function to generate solution tables (2--players), called by solveSimplex
 table4 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   svars <- substr(vars,1,2)
+  colnames(Wmatrix) <- rownames(Wmatrix) <- vars
   if(gen_time == "continuous"){}
   else if(gen_time == "discrete"){stop("discrete generation time not yet implemented")}
   else{stop("invalid generation time")}
@@ -48,7 +49,7 @@ table4 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   # assemble eigendecomposition list for full game
   Eig <- list(classed[[4]], eq4RPS[[4]], eq4RPL[[4]], eq4RSL[[4]], eq4PSL[[4]], eq4RP[[4]], eq4RS[[4]], eq4RL[[4]], eq4PS[[4]], eq4PL[[4]], eq4SL[[4]]) 
   names(Eig) <- c(paste(svars[1],svars[2],svars[3],svars[4],sep="."), 
-    paste(svars[1],svars[2],svars[3],0,sep="."), paste(svars[1],svars[2],0,svars[4],sep="."), paste(svars[1],0,svars[3],svars[4],sep="."), paste(0,svars[2],svars[3],svars[4],sep=""),
+    paste(svars[1],svars[2],svars[3],0,sep="."), paste(svars[1],svars[2],0,svars[4],sep="."), paste(svars[1],0,svars[3],svars[4],sep="."), paste(0,svars[2],svars[3],svars[4],sep="."),
     paste(svars[1],svars[2],"0.0",sep="."), paste(svars[1],"0",svars[3],"0",sep="."), paste(svars[1],"0.0",svars[4],sep="."), paste("0",svars[2],svars[3],"0",sep="."), paste("0",svars[2],"0",svars[4],sep="."), paste("0.0",svars[3],svars[4],sep="."))
   # 3-face games equilibrium table
   table_3faces <- c(eq3RPS[[1]][3], eq3RPL[[1]][3], eq3RSL[[1]][3], eq3PSL[[1]][3])
@@ -66,7 +67,7 @@ table4 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
                           paste("_",svars[2],svars[3],"_",sep="."), paste("_",svars[2],"_",svars[4],sep="."), paste("_","_",svars[3],svars[4],sep="."))
   Eig_2Edges <- c(eq3RPS[[3]][[2]][1], eq3RPS[[3]][[2]][2], eq3RPL[[3]][[2]][2], eq3RPS[[3]][[2]][3], eq3PSL[[3]][[2]][2], eq3PSL[[3]][[2]][3])
   # output table
-  table_out <- list(table_full, Faces = list(table_3faces, RPSL2_Eq), Eig = list(All = Eig, "Faces(3)" = Eig_3Edges, "Faces(2)" = Eig_2Edges))
+  table_out <- list(table_full, Faces = list(table_3faces, RPSL2_Eq), Eig = list("Eigendecomposition" = Eig, "Eigendecomposition_Faces(3)" = Eig_3Edges, "Eigendecomposition_Faces(2)" = Eig_2Edges))
   names(table_out) <- c(paste(vars[1],vars[2],vars[3],vars[4],sep="."), "Face_Equilibria", "Eigendecomposition"); names(table_out[[2]]) = c("Faces(3)", "Faces(2)")
   return(table_out)
 }

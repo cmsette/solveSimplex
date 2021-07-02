@@ -1,6 +1,7 @@
 ### Function to generate solution tables (2--players), called by solveSimplex
 table3 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   svars <- substr(vars,1,2)
+  colnames(Wmatrix) <- rownames(Wmatrix) <- vars
   if(gen_time == "continuous"){}
   else if(gen_time == "discrete"){stop("discrete generation time not yet implemented")}
   else{stop("invalid generation time")}
@@ -42,7 +43,7 @@ table3 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   Eig_Edges <- list(eq3RP[[4]], eq3RS[[4]], eq3PS[[4]])
   names(Eig_Edges) <- c(paste(svars[1],".",svars[2],sep=""), paste(svars[1],".",svars[3],sep=""), paste(svars[2],".",svars[3],sep=""))
   # output table
-  table_out <- list(table_full, Faces = RPS2_Eq, Eig = list(All = Eig, Faces = Eig_Edges))
-  names(table_out) <- c(paste(vars[1],vars[2],vars[3],sep="."), "Faces(3)", "Eigendecomposition")
+  table_out <- list(table_full, Faces = RPS2_Eq, Eig = list("Eigendecomposition" = Eig, "Eigendecomposition_Faces" = Eig_Edges))
+  names(table_out) <- c(paste(vars[1],vars[2],vars[3],sep="."), "Faces(2)", "Eigendecomposition")
   return(table_out)
 }

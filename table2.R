@@ -2,6 +2,7 @@
 table2 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   # solves 2-strategy equilibrium
   eq2out <- eq2(Wmatrix)
+  colnames(Wmatrix) <- rownames(Wmatrix) <- vars
   if(is.na(eq2out[1])){classed <- list(W = Wmatrix, Eq = eq2out[1:2], Class = "None", Eig = NA)}else 
   if(eq2out[1] == 1){classed <- list(W = Wmatrix, Eq = eq2out[1:2], Class = "Sink", Eig = NA)}else 
   if(eq2out[2] == 1){classed <- list(W = Wmatrix, Eq = eq2out[1:2], Class = "Sink", Eig = NA)}else{
@@ -14,6 +15,6 @@ table2 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   row.names(RP_Eq) <- c(paste(vars[1], vars[2], sep="."))
   colnames(RP_Eq) <- c(vars[1],vars[2],"Eq")
   table_out <- list(classed[[1]], classed[[2]], RP_Eq, classed[[4]])
-  names(table_out) <- c("W", "Eq", paste(vars[1],vars[2],sep="."), paste(vars[1],".",vars[2],"_Eig",sep=""))
+  names(table_out) <- c("W", "Eq", paste(vars[1],vars[2],sep="."), "Eigendecomposition")
   return(table_out)
 }

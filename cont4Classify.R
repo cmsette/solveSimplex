@@ -7,7 +7,6 @@
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
 cont4Classify <- function(seq, W, zero, vars){
-  colnames(W) <- rownames(W) <- vars
   if(any(is.na(seq[1:4]))){type <- c("None")}else 
   if(is.na(seq[5])==T){type <- c("Error1")}else
   if(seq[5]==0){type <- c("None")}
