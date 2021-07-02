@@ -10,7 +10,7 @@ testApostatic<-function(W, Wvec){
   }
   if(nrow(W)>=4){if(any(which(W[,4]==min(W[,4]))==4)){ApoOut<-paste(ApoOut, Wvec[4])}}
   if(nrow(W)==5){if(any(which(W[,5]==min(W[,5]))==5)){ApoOut<-paste(ApoOut, Wvec[5])}}
-  if(is.null(ApoOut)){ApoOut<-"none"}
+  if(is.null(ApoOut)){ApoOut<-""}
   return(ApoOut)
 }
 # Tests whether game has positive frequency dependence
@@ -24,7 +24,7 @@ testAntiApostatic<-function(W, Wvec){
   }
   if(nrow(W)>=4){if(any(which(W[,4]==max(W[,4]))==4)){AntiApoOut<-paste(AntiApoOut, Wvec[4])}}
   if(nrow(W)==5){if(any(which(W[,5]==max(W[,5]))==5)){AntiApoOut<-paste(AntiApoOut, Wvec[5])}}
-  if(is.null(AntiApoOut)){AntiApoOut <-"none"}
+  if(is.null(AntiApoOut)){AntiApoOut <-""}
   return(AntiApoOut)
 }
 # Tests for cometitive intranstitivity
@@ -32,10 +32,10 @@ testAntiApostatic<-function(W, Wvec){
 rowMax<-function(row){which(row==max(row))}
 testIntransitive<-function(W){
   bestR1<-apply(W, 1, rowMax)
-  if(nrow(W)<5){if(length(unique(bestR1))==length(bestR1)){IntOut<-"Intransitive"}else{IntOut<-"none"}}else 
+  if(nrow(W)<5){if(length(unique(bestR1))==length(bestR1)){IntOut<-"yes"}else{IntOut<-""}}else 
     if(nrow(W)==5){
       test<-try(bestR2<-c(bestR1[1,], bestR1[2,]), silent=T)
-      if(class(test)=="try-error"){if(length(unique(bestR1))==length(bestR1)){IntOut<-"Intransitive"}else{IntOut<-"none"}} else 
-      {bestR2<-c(bestR1[1,], bestR1[2,]); if(length(unique(bestR2))*2==length(bestR2)){IntOut<-"Intransitive"}else{IntOut<-"none"}}}
+      if(class(test)=="try-error"){if(length(unique(bestR1))==length(bestR1)){IntOut<-"yes"}else{IntOut<-""}} else 
+      {bestR2<-c(bestR1[1,], bestR1[2,]); if(length(unique(bestR2))*2==length(bestR2)){IntOut<-"yes"}else{IntOut<-""}}}
   return(IntOut)
 }
