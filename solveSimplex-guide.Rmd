@@ -1,5 +1,5 @@
 ---
-title: "solveSimplex-guide"
+title: "solveSimplex guide"
 author: "Carla M. Sette"
 output: html_document
 ---
@@ -11,18 +11,18 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Overview
 **solveSimplex** is an R function that describes the equilibrium dynamics of single-population evolutionary game theory games of **2-5 strategies**. All strategies are assumed to exist in _admixture_, and engage in _continuous time replicator dynamics_.
 
+## _Rock-Paper-Scissors_ as an example.
+
 ### What is a population?
-In a single-population game, members of the same group utilize different strategies to compete for the same prize. These competing strategies all interact with one another (exist in admixture), rather than distribute themselves into separate patches. 
+In a single-population game, members of the same group utilize different strategies to compete for the same prize. These competing strategies all interact with one another (exist in admixture), rather than distribute themselves into separate patches.
+
+In the classic schoolyard game _Rock-Paper-Scissors_, players can all choose from each of these three options.
 
 Examples of single-population games can be found in nature in every taxonomic group. Some examples include: 
 
 - strains of _E. coli_ compete to have the largest colony
 - male lizard morphs compete for mates (_Uta stansburiana_)
 - salamander species compete to evade predators (_Taricha torosa_, _Ensatina eschscholzii xanthoptica_, _Ensatina eschscholzii eschscholzii_)
-
-
-**Here, I will use the classic game _Rock-Paper-Scissors_ as an example.**
-
 
 ### Rock-Paper-Scissors and the W-matrix
 The competitive dynamics of _Rock-Paper-Scissors_ can be described using a **payoff matrix**. The payoff matrix shows the **payoff**, a numerical value describing the fitness outcome, of each strategy (each row) in pairwise competition with every strategy in the population (each column).
