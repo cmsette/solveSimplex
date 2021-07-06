@@ -1,8 +1,6 @@
 ---
 title: "solveSimplex guide"
 author: "Carla M. Sette"
-date: "7/5/2021"
-output: html_document
 ---
 
 ```{r setup, include=FALSE}
