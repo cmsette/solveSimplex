@@ -13,7 +13,7 @@ solveSimplex <- function(W, gen_time="continuous", zero=1e-14, sig_dig=4, names=
     else if(class(W)[1] == "matrix" && mapply(W, FUN = function(x) is.numeric(x)==T)){Wmatrix = W} 
     else{stop("non-numeric payoff values")}
   } else{stop("simplex dimension ")}
-  if(length(names) < sqrt(length(W))){names=c("R","P","S","L","K")[1:(sqrt(length(W))-length(names))]}
+  if(length(names) < sqrt(length(W))){names=c(names, c("R","P","S","L","K")[1:(sqrt(length(W))-length(names))])}
   if(length(names) > sqrt(length(W))){names=names[1:sqrt(length(W))]}
   # analyzes game by number of competitors  
   if(sqrt(length(W)) == 2){

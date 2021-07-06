@@ -1,0 +1,69 @@
+---
+title: "solveSimplex guide"
+author: "Carla M. Sette"
+date: "7/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+### Overview
+**solveSimplex** is an R function that describes the equilibrium dynamics of single-population evolutionary game theory games of **2-5 strategies**. All strategies are assumed to exist in _admixture_, and engage in _continuous time replicator dynamics_.
+
+### What is a population?
+In a single-population game, members of the same group utilize different strategies to compete for the same prize. These competing strategies all interact with one another (exist in admixture), rather than distribute themselves into separate patches. 
+
+Examples of single-population games can be found in nature in every taxonomic group. Some examples include: 
+
+- strains of _E. coli_ compete to have the largest colony
+- male lizard morphs compete for mates (_Uta stansburiana_)
+- salamander species compete to evade predators (_Taricha torosa_, _Ensatina eschscholzii xanthoptica_, _Ensatina eschscholzii eschscholzii_)
+
+**Here, I will use the classic game _Rock-Paper-Scissors_ as an example.**
+
+### Rock-Paper-Scissors and the W-matrix
+The competitive dynamics of _Rock-Paper-Scissors_ can be described using a **payoff matrix**. The payoff matrix shows the **payoff**, a numerical value describing the fitness outcome, of each strategy (each row) in pairwise competition with every strategy in the population (each column).
+
+In the classic game, Rock receives a payoff of **0** (a tie) when in competition with other Rocks, a payoff of **-1** (defeat) against Paper, and a payoff of **1** (victory) against Scissors.
+
+Therefore, the payoff matrix for a game of Rock-Paper-Scissors looks like:
+```{r}
+W <- matrix(c(0,-1,1, 1,0,-1, -1,1,0), ncol=3, byrow=T)
+colnames(W) <- rownames(W) <- c("Rock", "Paper", "Scissors")
+print(W)
+```
+
+### The replicator equation
+In a population subject to selection, the proportion of the population belonging to each strategy may change over time. If a strategy experiences a higher average fitness than the population average, it will increase in frequency over time; if a strategy experiences a lower average fitness, it will decrease in frequency.
+
+Under continuous time replicator dynamics, the average fitness (w~i~) of a strategy (i) in competition with all other strategies (j) can be calculated as the weighted average of the payoff (w~ij~) against each strategy, based on the relative frequency of each strategy in the population (s~j~): 
+
+$w_{i}(s)=∑\begin{array}{c} n \\ j=1\end{array} ( w_{ij} s_{j} )$
+
+The average population fitness is the weighted average of all strategies' average fitness (w~i~):
+
+$\bar{w}=∑w_{i} s_{i}$
+
+Finally, the frequency of each strategy in the population (s) will increase or decrease over time (t), based on the difference between the fitness of that strategy and the average fitness of all strategies in the population ($\bar{w}$).
+
+$\dot{s}_{i}(t)=(w_{i}-\bar{w})s_{i}(t)$
+
+
+
+```{r}
+#solveSimplex(c(0,-1,1,1,-1, 1,0,-1,-1,1, -1,1,0,1,-1, -1,1,-1,0,1, 1,-1,1,-1,0), gen_time="continuous", names=c("R", "P", "S", "L", "K"))
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
