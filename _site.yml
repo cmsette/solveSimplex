@@ -5,8 +5,8 @@ navbar:
   left:
   - text: "Home"
    href: index.html
-  - text: "README"
-   href: README.html
+  - text: "solveSimplex guide"
+   href: 'solveSimplex guide.html'
 output:
   html_document:
  theme: cosmo
