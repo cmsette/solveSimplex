@@ -1,0 +1,12 @@
+name: "solveSimplex"
+output_dir: "docs"
+navbar:
+  title: "solveSimplex"
+  left:
+  - text: "Home"
+   href: index.html
+  - text: "README"
+   href: README.html
+output:
+  html_document:
+ theme: cosmo
