@@ -1,6 +1,9 @@
 plugins:
   - jekyll-relative-links
-theme: jekyll-theme-cayman
+relative_links:
+  enabled: true
+  collections: true
 markdown: kramdown
 include:
   - solveSimplex-guide.html
+  - README.md
