@@ -3,4 +3,4 @@ plugins:
 theme: jekyll-theme-cayman
 markdown: kramdown
 include:
-  - README.html
+  - solveSimplex-guide.html
