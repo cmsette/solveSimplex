@@ -1,5 +1,5 @@
 ---
-title: "solveSimplex guide"
+title: "solveSimplex-guide"
 author: "Carla M. Sette"
 output: html_document
 ---
@@ -8,9 +8,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-### Overview
+## Overview
 **solveSimplex** is an R function that describes the equilibrium dynamics of single-population evolutionary game theory games of **2-5 strategies**. All strategies are assumed to exist in _admixture_, and engage in _continuous time replicator dynamics_.
 
 ### What is a population?
@@ -22,7 +20,9 @@ Examples of single-population games can be found in nature in every taxonomic gr
 - male lizard morphs compete for mates (_Uta stansburiana_)
 - salamander species compete to evade predators (_Taricha torosa_, _Ensatina eschscholzii xanthoptica_, _Ensatina eschscholzii eschscholzii_)
 
+
 **Here, I will use the classic game _Rock-Paper-Scissors_ as an example.**
+
 
 ### Rock-Paper-Scissors and the W-matrix
 The competitive dynamics of _Rock-Paper-Scissors_ can be described using a **payoff matrix**. The payoff matrix shows the **payoff**, a numerical value describing the fitness outcome, of each strategy (each row) in pairwise competition with every strategy in the population (each column).
@@ -50,12 +50,6 @@ $\bar{w}=∑w_{i} s_{i}$
 Finally, the frequency of each strategy in the population (s) will increase or decrease over time (t), based on the difference between the fitness of that strategy and the average fitness of all strategies in the population ($\bar{w}$).
 
 $\dot{s}_{i}(t)=(w_{i}-\bar{w})s_{i}(t)$
-
-
-
-```{r}
-#solveSimplex(c(0,-1,1,1,-1, 1,0,-1,-1,1, -1,1,0,1,-1, -1,1,-1,0,1, 1,-1,1,-1,0), gen_time="continuous", names=c("R", "P", "S", "L", "K"))
-```
 
 ## Including Plots
 
