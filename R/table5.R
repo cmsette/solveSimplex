@@ -7,7 +7,7 @@ table5 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   else{stop("invalid generation time")}
   # solves 4-strategy equilibrium
   eq5out <- eq5(Wmatrix, zero)
-  if(is.na(eq4out[1])){classed <- list(W = Wmatrix, Eq = eq4out[1:5], Class = "None", Eig = NA)}
+  if(is.na(eq5out[1])){classed <- list(W = Wmatrix, Eq = eq5out[1:5], Class = "None", Eig = NA)}
   else{classed <- cont5Classify(eq5out, Wmatrix, zero, vars)}
   # solves 4-strategy, 3-strategy and 2-strategy full games, generates 4-strategy eq vectors 
   eq4RPSL <- table4(Wmatrix[-5,-5], gen_time, zero, sig_dig, vars[c(1,2,3,4)]); eq5RPSLout <- c(eq4RPSL[[1]][[2]][1:4],0,1)
@@ -77,12 +77,12 @@ table5 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   Int <- c(testIntransitive(Wmatrix), testIntransitive(Wmatrix[-5,-5]), testIntransitive(Wmatrix[-4,-4]), testIntransitive(Wmatrix[-3,-3]), testIntransitive(Wmatrix[-2,-2]), testIntransitive(Wmatrix[-1,-1]),
            testIntransitive(Wmatrix[-c(4,5),-c(4,5)]), testIntransitive(Wmatrix[-c(3,5),-c(3,5)]), testIntransitive(Wmatrix[-c(3,4),-c(3,4)]), testIntransitive(Wmatrix[-c(2,5),-c(2,5)]), testIntransitive(Wmatrix[-c(2,4),-c(2,4)]),
            testIntransitive(Wmatrix[-c(2,3),-c(2,3)]), testIntransitive(Wmatrix[-c(1,5),-c(1,5)]), testIntransitive(Wmatrix[-c(1,4),-c(1,4)]), testIntransitive(Wmatrix[-c(1,3),-c(1,3)]), testIntransitive(Wmatrix[-c(1,2),-c(1,2)]), rep("",10))
-  Apo <- c(testApostatic(Wmatrix), testApostatic(Wmatrix[-5,-5], svars), testApostatic(Wmatrix[-4,-4], svars), testApostatic(Wmatrix[-3,-3], svars), testApostatic(Wmatrix[-2,-2], svars), testApostatic(Wmatrix[-1,-1], svars),
-           testApostatic(Wmatrix[-c(4,5),-c(4,5)], svars), testApostatic(Wmatrix[-c(3,5),-c(3,5)], svars), testApostatic(Wmatrix[-c(3,4),-c(3,4)], svars), testApostatic(Wmatrix[-c(2,5),-c(2,5)], svars), testApostatic(Wmatrix[-c(2,4),-c(2,4)], svars),
-           testApostatic(Wmatrix[-c(2,3),-c(2,3)], svars), testApostatic(Wmatrix[-c(1,5),-c(1,5)], svars), testApostatic(Wmatrix[-c(1,4),-c(1,4)], svars), testApostatic(Wmatrix[-c(1,3),-c(1,3)], svars), testApostatic(Wmatrix[-c(1,2),-c(1,2)], svars), rep("",10))
-  A_Apo <- c(testAntiApostatic(Wmatrix), testAntiApostatic(Wmatrix[-5,-5], svars), testAntiApostatic(Wmatrix[-4,-4], svars), testAntiApostatic(Wmatrix[-3,-3], svars), testAntiApostatic(Wmatrix[-2,-2], svars), testAntiApostatic(Wmatrix[-1,-1], svars),
-           testAntiApostatic(Wmatrix[-c(4,5),-c(4,5)], svars), testAntiApostatic(Wmatrix[-c(3,5),-c(3,5)], svars), testAntiApostatic(Wmatrix[-c(3,4),-c(3,4)], svars), testAntiApostatic(Wmatrix[-c(2,5),-c(2,5)], svars), testAntiApostatic(Wmatrix[-c(2,4),-c(2,4)], svars),
-           testAntiApostatic(Wmatrix[-c(2,3),-c(2,3)], svars), testAntiApostatic(Wmatrix[-c(1,5),-c(1,5)], svars), testAntiApostatic(Wmatrix[-c(1,4),-c(1,4)], svars), testAntiApostatic(Wmatrix[-c(1,3),-c(1,3)], svars), testAntiApostatic(Wmatrix[-c(1,2),-c(1,2)], svars), rep("",10))
+  Apo <- c(testApostatic(Wmatrix, svars), testApostatic(Wmatrix[-5,-5], svars[-5]), testApostatic(Wmatrix[-4,-4], svars[-4]), testApostatic(Wmatrix[-3,-3], svars[-3]), testApostatic(Wmatrix[-2,-2], svars[-2]), testApostatic(Wmatrix[-1,-1], svars[-1]),
+           testApostatic(Wmatrix[-c(4,5),-c(4,5)], svars[-c(4,5)]), testApostatic(Wmatrix[-c(3,5),-c(3,5)], svars[-c(3,5)]), testApostatic(Wmatrix[-c(3,4),-c(3,4)], svars[-c(3,4)]), testApostatic(Wmatrix[-c(2,5),-c(2,5)], svars[-c(2,5)]), testApostatic(Wmatrix[-c(2,4),-c(2,4)], svars[-c(2,4)]),
+           testApostatic(Wmatrix[-c(2,3),-c(2,3)], svars[-c(2,3)]), testApostatic(Wmatrix[-c(1,5),-c(1,5)], svars[-c(1,5)]), testApostatic(Wmatrix[-c(1,4),-c(1,4)], svars[-c(1,4)]), testApostatic(Wmatrix[-c(1,3),-c(1,3)], svars[-c(1,3)]), testApostatic(Wmatrix[-c(1,2),-c(1,2)], svars[-c(1,2)]), rep("",10))
+  A_Apo <- c(testAntiApostatic(Wmatrix, svars), testAntiApostatic(Wmatrix[-5,-5], svars[-5]), testAntiApostatic(Wmatrix[-4,-4], svars[-4]), testAntiApostatic(Wmatrix[-3,-3], svars[-3]), testAntiApostatic(Wmatrix[-2,-2], svars[-2]), testAntiApostatic(Wmatrix[-1,-1], svars[-1]),
+           testAntiApostatic(Wmatrix[-c(4,5),-c(4,5)], svars[-c(4,5)]), testAntiApostatic(Wmatrix[-c(3,5),-c(3,5)], svars[-c(3,5)]), testAntiApostatic(Wmatrix[-c(3,4),-c(3,4)], svars[-c(3,4)]), testAntiApostatic(Wmatrix[-c(2,5),-c(2,5)], svars[-c(2,5)]), testAntiApostatic(Wmatrix[-c(2,4),-c(2,4)], svars[-c(2,4)]),
+           testAntiApostatic(Wmatrix[-c(2,3),-c(2,3)], svars[-c(2,3)]), testAntiApostatic(Wmatrix[-c(1,5),-c(1,5)], svars[-c(1,5)]), testAntiApostatic(Wmatrix[-c(1,4),-c(1,4)], svars[-c(1,4)]), testAntiApostatic(Wmatrix[-c(1,3),-c(1,3)], svars[-c(1,3)]), testAntiApostatic(Wmatrix[-c(1,2),-c(1,2)], svars[-c(1,2)]), rep("",10))
   RPSLK_Eq <- cbind(RPSLK_Eq, Int, Apo, A_Apo)
   table_full <- list(W_matrix = classed[[1]], Eq5 = classed[[2]], Equilibria = RPSLK_Eq)
   # assemble eigendecomposition list for full game

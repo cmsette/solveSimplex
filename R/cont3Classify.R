@@ -7,9 +7,9 @@
 # Error2: projection matrix cannot be calculated
 # Error3: no zero eigenvalue calculated for projection matrix
 cont3Classify <- function(seq, W, zero, vars){
-  if(any(is.na(seq[1:3]))){type <- c("None")}else 
-  if(is.na(seq[4])){type <- c("Error1")}else 
-  if(seq[4]==0){type <- c("None")}
+  if(any(is.na(seq[1:3])) || any(is.nan(seq[1:3]))){type <- c("None"); EigM = NA}else 
+  if(is.na(seq[4])){type <- c("None"); EigM = NA}else 
+  if(seq[4]==0){type <- c("None"); EigM = NA}
   else{
     W1<-W[1,1]; W2<-W[1,2]; W3<-W[1,3]; W4<-W[2,1]; W5<-W[2,2]; W6<-W[2,3]; W7<-W[3,1]; W8<-W[3,2]; W9<-W[3,3] 
     r <- seq[1]; p <- seq[2]; s <- seq[3]
@@ -29,7 +29,7 @@ cont3Classify <- function(seq, W, zero, vars){
     Jac <- matrix(c(Jac1, Jac2, Jac3, Jac4, Jac5, Jac6, Jac7, Jac8, Jac9), nrow=3, ncol=3, byrow=T)
     # Calculates eigenvectors for projection matrix, returns values
     M <- Jac %*% P
-    if(isTRUE(any(M=="NaN"))==T){type <- c("Error2")} 
+    if(isTRUE(any(M=="NaN"))==T){type <- c("NaN"); EigM = NA} 
     else{EigM <- eigen(M, symmetric=F)
       if(abs(Re(EigM$values[3])) < zero){	
       EigM$values[1:2] <- sort(Re(EigM$values)[1:2], decreasing=T)
@@ -38,7 +38,7 @@ cont3Classify <- function(seq, W, zero, vars){
       else if(Re(EigM$values[2]) > zero){type <- c("Source")}	
       else{signs<-ifelse(Re(EigM$values[1:2]) > zero, 1, 0)
       if(sum(signs) == 1){type <- c("Saddle1")}}}		
-      else{type <- c("Error3")}	
+      else{type <- c("None")}	
     }
   }; return(list(W = W, Eq = seq[1:3], Class = type, Eig = EigM))
 }

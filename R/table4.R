@@ -20,7 +20,7 @@ table4 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   eq4PLout <- unlist(c(0,eq3PSL[[1]][[3]][3,1:3],1)); eq4SLout <- unlist(c(0,eq3PSL[[1]][[3]][4,1:3],1))
   # solves 4(3) partial games
   eq4RPS <- cont4Classify(eq4RPSout, Wmatrix, zero, vars)
-  eq4RPL <- cont4Classify(eq3RPLout, Wmatrix, zero, vars)
+  eq4RPL <- cont4Classify(eq4RPLout, Wmatrix, zero, vars)
   eq4RSL <- cont4Classify(eq4RSLout, Wmatrix, zero, vars)
   eq4PSL <- cont4Classify(eq4PSLout, Wmatrix, zero, vars)
   # solves 4(2) partial games
@@ -31,10 +31,10 @@ table4 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
   eq4PL <- cont4Classify(eq4PLout, Wmatrix, zero, vars)
   eq4SL <- cont4Classify(eq4SLout, Wmatrix, zero, vars)
   # full game equilibrium table with intransitivity, apostasis, anti-apostasis
-  RPSL_Eq <- data.frame("R" = c(eq4out[1], eq4RPSout[1], eq3RPLout[1], eq4RSLout[1], eq4PSLout[1], eq4RPout[1], eq4RSout[1], eq4RLout[1], eq4PSout[1], eq4PLout[1], eq4SLout[1]), 
-                        "P" = c(eq4out[2], eq4RPSout[2], eq3RPLout[2], eq4RSLout[2], eq4PSLout[2], eq4RPout[2], eq4RSout[2], eq4RLout[2], eq4PSout[2], eq4PLout[2], eq4SLout[2]), 
-                        "S" = c(eq4out[3], eq4RPSout[3], eq3RPLout[3], eq4RSLout[3], eq4PSLout[3], eq4RPout[3], eq4RSout[3], eq4RLout[3], eq4PSout[3], eq4PLout[3], eq4SLout[3]),
-                        "L" = c(eq4out[4], eq4RPSout[4], eq3RPLout[4], eq4RSLout[4], eq4PSLout[4], eq4RPout[4], eq4RSout[4], eq4RLout[4], eq4PSout[4], eq4PLout[4], eq4SLout[4]),
+  RPSL_Eq <- data.frame("R" = c(eq4out[1], eq4RPSout[1], eq4RPLout[1], eq4RSLout[1], eq4PSLout[1], eq4RPout[1], eq4RSout[1], eq4RLout[1], eq4PSout[1], eq4PLout[1], eq4SLout[1]), 
+                        "P" = c(eq4out[2], eq4RPSout[2], eq4RPLout[2], eq4RSLout[2], eq4PSLout[2], eq4RPout[2], eq4RSout[2], eq4RLout[2], eq4PSout[2], eq4PLout[2], eq4SLout[2]), 
+                        "S" = c(eq4out[3], eq4RPSout[3], eq4RPLout[3], eq4RSLout[3], eq4PSLout[3], eq4RPout[3], eq4RSout[3], eq4RLout[3], eq4PSout[3], eq4PLout[3], eq4SLout[3]),
+                        "L" = c(eq4out[4], eq4RPSout[4], eq4RPLout[4], eq4RSLout[4], eq4PSLout[4], eq4RPout[4], eq4RSout[4], eq4RLout[4], eq4PSout[4], eq4PLout[4], eq4SLout[4]),
                         "Eq" = c(classed[[3]], eq4RPS[[3]], eq4RPL[[3]], eq4RSL[[3]], eq4PSL[[3]], eq4RP[[3]], eq4RS[[3]], eq4RL[[3]], eq4PS[[3]], eq4PL[[3]], eq4SL[[3]]))
   colnames(RPSL_Eq) <- c(vars[1], vars[2], vars[3], vars[4], "Eq")
   rownames(RPSL_Eq) <- c(paste(svars[1],svars[2],svars[3],svars[4],sep="."), 
@@ -42,8 +42,8 @@ table4 <- function(Wmatrix, gen_time, zero, sig_dig, vars){
                           paste(svars[1],svars[2],"0","0",sep="."), paste(svars[1],"0",svars[3],"0",sep="."), paste(svars[1],"0","0",svars[4],sep="."), 
                           paste("0",svars[2],svars[3],"0",sep="."), paste("0",svars[2],"0",svars[4],sep="."), paste("0","0",svars[3],svars[4],sep="."))
   Int <- c(testIntransitive(Wmatrix), testIntransitive(Wmatrix[-4,-4]), testIntransitive(Wmatrix[-3,-3]), testIntransitive(Wmatrix[-2,-2]), testIntransitive(Wmatrix[-1,-1]), rep("",6))
-  Apo <- c(testApostatic(Wmatrix, svars), testApostatic(Wmatrix[-4,-4], svars), testApostatic(Wmatrix[-3,-3], svars), testApostatic(Wmatrix[-2,-2], svars), testApostatic(Wmatrix[-1,-1], svars), rep("",6))
-  A_Apo <- c(testAntiApostatic(Wmatrix, svars), testAntiApostatic(Wmatrix[-4,-4], svars), testAntiApostatic(Wmatrix[-3,-3], svars), testAntiApostatic(Wmatrix[-2,-2], svars), testAntiApostatic(Wmatrix[-1,-1], svars), rep("",6))
+  Apo <- c(testApostatic(Wmatrix, svars), testApostatic(Wmatrix[-4,-4], svars[-4]), testApostatic(Wmatrix[-3,-3], svars[-3]), testApostatic(Wmatrix[-2,-2], svars[-2]), testApostatic(Wmatrix[-1,-1], svars[-1]), rep("",6))
+  A_Apo <- c(testAntiApostatic(Wmatrix, svars), testAntiApostatic(Wmatrix[-4,-4], svars[-4]), testAntiApostatic(Wmatrix[-3,-3], svars[-3]), testAntiApostatic(Wmatrix[-2,-2], svars[-2]), testAntiApostatic(Wmatrix[-1,-1], svars[-1]), rep("",6))
   RPSL_Eq <- cbind(RPSL_Eq, Int, Apo, A_Apo)
   table_full <- list(W_matrix = classed[[1]], Eq4 = classed[[2]], Equilibria = RPSL_Eq)
   # assemble eigendecomposition list for full game
