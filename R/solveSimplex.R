@@ -6,7 +6,8 @@
 # colnames=c("R", "P", "S", "L", "K"): user can change variable names displayed
 # deconstruct=T: output includes analysis of face games as independent games
 
-solveSimplex <- function(W, gen_time="continuous", zero=1e-14, sig_dig=4, names=c("R", "P", "S", "L", "K"), deconstruct=T, debug=F){
+solveSimplex <- function(W, names=c("R", "P", "S", "L", "K"), deconstruct=T, debug=F){
+  gen_time="continuous"; zero=1e-14; sig_dig=4
   # tests for numerical W, puts W in matrix format, check variable names vector length
   if(sqrt(length(W)) %in% c(2,3,4,5)){
     if(class(W)[1] == "numeric" && sapply(W, FUN = function(x) is.numeric(x)==T)){Wmatrix = matrix(W, nrow=sqrt(length(W)), byrow=T)} 
