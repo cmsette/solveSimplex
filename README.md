@@ -11,4 +11,5 @@ This code:
 5) Allows for analysis of face games as independent games in order to assess possibility of hysteresis in the system.
 
 Download the R workspace: https://github.com/cmsette/solveSimplex/blob/master/solveSimplex.Rproj
+
 Or the code: https://github.com/cmsette/solveSimplex/tree/master/R
